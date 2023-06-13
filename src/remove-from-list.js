@@ -22,11 +22,146 @@ const { NotImplementedError } = require('../extensions/index.js');
  *   }
  * }
  */
-function removeKFromList(/* l, k */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function removeKFromList(l, k) {
+  let head = l;
+  function removeAt(position) {
+   
+    let current = head;
+
+    if (position === 0) {
+      head = current.next;
+    } else {
+      let prev = null;
+      let index = 0;
+
+      while (index < position) {
+        prev = current;
+        current = current.next;
+        index++;
+      }
+
+      prev.next = current.next;
+    }
+  }
+
+  function remove(k) {
+    const array = indexesOf(k).sort((a, b) => b - a);
+    array.forEach((el)=>{
+      removeAt(el);
+    })
+    return head;
+  }
+
+  function indexesOf(element) {
+    let current = head;
+    let index = 0;
+    const arrayOfIndexes = [];
+
+    while (current) {
+      if (current.value === element) {
+        arrayOfIndexes.push(index);
+      }
+
+      current = current.next;
+      index++;
+    }
+    
+    if (arrayOfIndexes.length) {
+      return arrayOfIndexes;
+    }
+    else {
+      return -1;
+    }
+  }
+
+  return remove(k);
 }
 
 module.exports = {
   removeKFromList
 };
+
+
+
+
+//exp
+
+// class ListNode {
+//   constructor(x) {
+//     this.value = x;
+//     this.next = null;
+// }
+// }
+
+// function convertArrayToList(arr) {
+// return arr.reverse().reduce((acc, cur) => {
+//   if (acc) {
+//     const node = new ListNode(cur);
+//     node.next = acc;
+//     return node;
+//   }
+
+//   return new ListNode(cur);
+// }, null);
+// }
+
+
+
+// function removeKFromList(l, k) {
+// let head = l;
+
+// function removeAt(position) {
+ 
+//   let current = head;
+
+//   if (position === 0) {
+//     head = current.next;
+//   } else {
+//     let prev = null;
+//     let index = 0;
+
+//     while (index < position) {
+//       prev = current;
+//       current = current.next;
+//       index++;
+//     }
+
+//     prev.next = current.next;
+//   }
+// }
+
+// function remove(k) {
+//   const array = indexesOf(k).sort((a, b) => b - a);
+//   array.forEach((el)=>{
+//     removeAt(el);
+//   })
+//   return head;
+// }
+
+// function indexesOf(element) {
+//   let current = head;
+//   let index = 0;
+//   const arrayOfIndexes = [];
+
+//   while (current) {
+//     if (current.value === element) {
+//       arrayOfIndexes.push(index);
+//     }
+
+//     current = current.next;
+//     index++;
+//   }
+  
+//   if (arrayOfIndexes.length) {
+//     return arrayOfIndexes;
+//   }
+//   else {
+//     return -1;
+//   }
+// }
+
+// return remove(k);
+// }
+
+// const list = convertArrayToList([3, 1, 2, 3, 4, 5]);
+// removeKFromList(list, 3)
